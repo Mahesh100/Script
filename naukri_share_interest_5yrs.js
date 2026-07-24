@@ -152,9 +152,9 @@ let loop = parseInt(localStorage.getItem("shareInterestLoop") || "0", 10);
 if (minExp === null) {
     console.warn(`⚠️ Can't parse experience for Job ID: ${jobId}. Skipping.`);
     continue;
-} else if (minExp > MAX_EXPERIENCE) {
+} else if (minExp < 5 || minExp > 6) {
     console.log(
-        `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Allowed: ${MAX_EXPERIENCE} Yrs)`
+        `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Allowed: 5-6 Yrs)`
     );
     continue;
 }
