@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Naukri Auto "Share Interest" ≤ 5 Yrs Only
+// @name         Naukri Auto "Share Interest" ≤ 4 Yrs Only (Greater than 4 Yrs exp)
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      1.0
 // @description  Auto-clicks "Share Interest" on Naukri for jobs with experience ≤ 5 Yrs. Includes scroll, timer, and job tracking.
 // @author       Mahesh
 // @match        https://www.naukri.com/myapply/*
@@ -15,9 +15,9 @@
 
     console.log("🚀 Naukri Auto Script loaded ✅");
 
-    const maxLoops = 5;
-    const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-    let loop = parseInt(localStorage.getItem("shareInterestLoop") || "0", 10);
+const maxLoops = 5;
+const MAX_EXPERIENCE = 4; // Maximum experience in years
+const wait = (ms) => new Promise((res) => setTimeout((res), ms));
 
     if (!localStorage.getItem("lastResetTime")) {
         localStorage.setItem("lastResetTime", Date.now().toString());
@@ -147,13 +147,15 @@
             const expText = expElem?.innerText || '';
             const minExp = getExperienceValue(expText);
 
-            if (minExp === null) {
-                console.warn(`⚠️ Can't parse experience for Job ID: ${jobId}. Skipping.`);
-                continue;
-            } else if (minExp > 4) {
-                console.log(`🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs)`);
-                continue;
-            }
+if (minExp === null) {
+    console.warn(`⚠️ Can't parse experience for Job ID: ${jobId}. Skipping.`);
+    continue;
+} else if (minExp > MAX_EXPERIENCE) {
+    console.log(
+        `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Allowed: ${MAX_EXPERIENCE} Yrs)`
+    );
+    continue;
+}
 
             if (btn.innerText.includes("Share Interest")) {
                 console.log(`🚀 Clicking 'Share Interest' for Job ID: ${jobId}`);
