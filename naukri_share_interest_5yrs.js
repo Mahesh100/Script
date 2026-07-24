@@ -148,13 +148,25 @@ let loop = parseInt(localStorage.getItem("shareInterestLoop") || "0", 10);
             const expElem = article?.querySelector('[class*="exp"]') || article?.querySelector('li');
             const expText = expElem?.innerText || '';
             const minExp = getExperienceValue(expText);
+//extracting experience check is commented out to allow all experience levels  5-6 years
+// if (minExp === null) {
+//     console.warn(`⚠️ Can't parse experience for Job ID: ${jobId}. Skipping.`);
+//     continue;
+// } else if (minExp < 5 || minExp > 6) {
+//     console.log(
+//         `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Allowed: 5-6 Yrs)`
+//     );
+//     continue;
+// }
 
+
+// added following block to enforce the 5 Yrs experience requirement
 if (minExp === null) {
     console.warn(`⚠️ Can't parse experience for Job ID: ${jobId}. Skipping.`);
     continue;
-} else if (minExp < 5 || minExp > 6) {
+} else if (minExp !== 5) {
     console.log(
-        `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Allowed: 5-6 Yrs)`
+        `🚫 Skipping Job ID: ${jobId} (Min Exp: ${minExp} Yrs, Required: 5 Yrs)`
     );
     continue;
 }
